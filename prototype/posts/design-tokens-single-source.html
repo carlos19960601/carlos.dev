@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>把设计令牌做成单一数据源 · Carlos</title>
+  <meta name="description" content="一个颜色改一次是维护，改六次是事故。把 Figma 里的设计令牌变成多端代码的唯一来源。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/arc.css">
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"></div>
+
+  <header class="topnav" data-od-id="topnav">
+    <div class="topnav-inner">
+      <a class="tb-id" href="../index.html"><div class="monogram" aria-hidden="true">C</div><span class="tb-name">Carlos</span></a>
+      <nav class="topnav-links" aria-label="主导航">
+        <a class="nav-link" href="../index.html#about">关于</a>
+        <a class="nav-link" href="../index.html#work">作品</a>
+        <a class="nav-link" href="../index.html#blog">博客</a>
+        <a class="nav-link" href="../index.html#tools">工具</a>
+      </nav>
+      <button class="btn btn-glass topnav-cta" type="button" data-copy="hi@carlos.design">复制邮箱</button>
+    </div>
+  </header>
+
+  <main id="top" class="main">
+    <div class="wrap">
+      <a class="back-link" href="../index.html#blog">返回博客</a>
+      <article class="article" data-od-id="article-design-tokens">
+        <header class="article-head">
+          <p class="eyebrow">工程</p>
+          <h1>把设计令牌做成单一数据源</h1>
+          <p class="article-meta">2026.06 · 约 6 分钟 · Carlos</p>
+        </header>
+        <div class="prose">
+          <p class="lead">一个颜色改一次是维护，改六次是事故。这篇聊聊我们怎么把 Figma 里的设计令牌，变成 CSS、Swift、Compose 三端代码的唯一来源。</p>
+
+          <h2>先想清楚「令牌是什么」</h2>
+          <p>令牌不是变量名，是决策。每一个 <code>--color-accent</code>、<code>--space-4</code>、<code>--radius-lg</code> 的背后，都应该能回答一句「为什么是这个值」。把令牌当成随手起名的变量，系统很快就会塌成新一锅硬编码。</p>
+          <p>所以第一步不是搭工具链，而是和设计师一起，把颜色、字号、间距、圆角这几类决策各列一张表，标注语义。语义越清楚，下游越省事。</p>
+
+          <h2>单一来源的链路</h2>
+          <p>链路其实很短：Figma Variables 当唯一来源，导出成 <code>tokens.json</code>，过一遍 Style Dictionary，分别吐出 CSS 变量、Swift 常量、Compose <code>Color</code>。整个过程跑在 CI 里，设计师改一个色，PR 里就能直接看到三端的 diff。</p>
+          <blockquote>令牌系统真正的价值，不是少打几个字，是让「改一个颜色」这件事的成本变得可预测。</blockquote>
+          <p>它不性感。但每改一次主题色只花五分钟之后，团队里再没人想回到手抄色值的日子。</p>
+        </div>
+        <footer class="article-foot">
+          <span class="af-update">上次更新 · 2026.06 　|　 Carlos · 工程笔记</span>
+          <a class="btn btn-primary btn-arrow" href="../index.html#blog">返回博客</a>
+        </footer>
+      </article>
+    </div>
+  </main>
+
+  <footer class="pagefoot" data-od-id="footer">
+    <span>© 2026 Carlos · 个人作品集</span>
+    <a class="to-top" href="#top">回到顶部 ↑</a>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="../assets/app.js" defer></script>
+</body>
+</html>

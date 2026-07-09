@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "posts/solo-month-three.html",
+  "entry": "posts/solo-month-three.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "createdAt": "2026-07-05T11:34:49.765Z",
+  "updatedAt": "2026-07-05T11:34:49.765Z",
+  "metadata": {
+    "inferred": true,
+    "reconciled": true
+  }
+}

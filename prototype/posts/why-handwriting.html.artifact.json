@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "posts/why-handwriting.html",
+  "entry": "posts/why-handwriting.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "createdAt": "2026-07-05T11:32:06.537Z",
+  "updatedAt": "2026-07-05T11:32:06.537Z",
+  "metadata": {
+    "inferred": true,
+    "reconciled": true
+  }
+}

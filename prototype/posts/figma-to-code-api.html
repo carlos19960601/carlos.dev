@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>从 Figma 到代码：组件 API 的取舍 · Carlos</title>
+  <meta name="description" content="一个按钮组件，设计稿里 12 个变体，代码里只暴露 4 个 props。这篇讲为什么。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/arc.css">
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"></div>
+
+  <header class="topnav" data-od-id="topnav">
+    <div class="topnav-inner">
+      <a class="tb-id" href="../index.html"><div class="monogram" aria-hidden="true">C</div><span class="tb-name">Carlos</span></a>
+      <nav class="topnav-links" aria-label="主导航">
+        <a class="nav-link" href="../index.html#about">关于</a>
+        <a class="nav-link" href="../index.html#work">作品</a>
+        <a class="nav-link" href="../index.html#blog">博客</a>
+        <a class="nav-link" href="../index.html#tools">工具</a>
+      </nav>
+      <button class="btn btn-glass topnav-cta" type="button" data-copy="hi@carlos.design">复制邮箱</button>
+    </div>
+  </header>
+
+  <main id="top" class="main">
+    <div class="wrap">
+      <a class="back-link" href="../index.html#blog">返回博客</a>
+      <article class="article" data-od-id="article-figma-to-code">
+        <header class="article-head">
+          <p class="eyebrow">设计</p>
+          <h1>从 Figma 到代码：组件 API 的取舍</h1>
+          <p class="article-meta">2026.02 · 约 6 分钟 · Carlos</p>
+        </header>
+        <div class="prose">
+          <p class="lead">一个按钮组件，设计稿里画了 12 个变体，到代码里我只暴露了 4 个 props。这篇聊聊这中间的取舍。</p>
+
+          <h2>设计稿的「全」和代码的「简」</h2>
+          <p>设计稿的工作是覆盖所有可能，所以 12 个变体是合理的：它要把每种状态、每种尺寸、每种语义都演示一遍。但代码的工作相反，是约束滥用。那 12 个变体里，有一半其实是为了「以防万一」而存在的。</p>
+          <p>把「以防万一」照搬进 API，团队很快就会出现十几种谁也不敢删的配置组合。</p>
+
+          <h2>四个 props 是怎么选的</h2>
+          <p>最后留下的是 <code>variant</code>、<code>size</code>、<code>tone</code>、<code>disabled</code>。每一个都对应一类真实且高频的需求。剩下那些「偶尔要」的差异，交给 token 在外层覆盖，不进组件 API。</p>
+          <blockquote>好的组件 API，是让错误的使用方式变得别扭。</blockquote>
+          <p>取舍的标准不是「能配置多少」，而是「让正确的事变得容易」。少几个 props，多几分纪律。</p>
+        </div>
+        <footer class="article-foot">
+          <span class="af-update">上次更新 · 2026.02 　|　 Carlos · 设计笔记</span>
+          <a class="btn btn-primary btn-arrow" href="../index.html#blog">返回博客</a>
+        </footer>
+      </article>
+    </div>
+  </main>
+
+  <footer class="pagefoot" data-od-id="footer">
+    <span>© 2026 Carlos · 个人作品集</span>
+    <a class="to-top" href="#top">回到顶部 ↑</a>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="../assets/app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "posts/arc-spaces-after-one-year.html",
+  "entry": "posts/arc-spaces-after-one-year.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "createdAt": "2026-07-05T11:34:04.245Z",
+  "updatedAt": "2026-07-05T11:34:04.245Z",
+  "metadata": {
+    "inferred": true,
+    "reconciled": true
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "posts/year-end-12-things.html",
+  "entry": "posts/year-end-12-things.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "createdAt": "2026-07-05T11:36:17.951Z",
+  "updatedAt": "2026-07-05T11:36:17.951Z",
+  "metadata": {
+    "inferred": true,
+    "reconciled": true
+  }
+}
