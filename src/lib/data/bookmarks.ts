@@ -19,173 +19,87 @@ export interface BookmarkGroup {
 
 export const bookmarkGroups: BookmarkGroup[] = [
 	{
-		id: "engineering",
-		name: "研发与前沿框架",
-		description: "构建现代 Web 应用的核心开发利器、运行环境与框架生态",
-		icon: "Code2",
+		id: "ui-components",
+		name: "UI 组件库",
+		description: "精选开源组件库与复制即用的 UI 组件、交互动画资源",
+		icon: "Sparkles",
 		bookmarks: [
 			{
-				id: "svelte",
-				title: "Svelte 5",
-				url: "https://svelte.dev",
-				description: "带来 Runes 响应式原语的新一代 Web 编译型框架，极致简洁与高性能。",
-				group: "研发与前沿框架",
-				tags: ["Framework", "Svelte", "Reactivity", "Frontend"],
+				id: "aceternity-ui",
+				title: "Aceternity UI",
+				url: "https://ui.aceternity.com/",
+				description: "Framer Motion 驱动的精美动效组件库，复制粘贴即用的现代 SaaS 落地页元素。",
+				group: "UI 组件库",
+				tags: ["Components", "Animation", "React", "Tailwind"],
 				featured: true
 			},
 			{
-				id: "shadcn-svelte",
-				title: "shadcn-svelte",
-				url: "https://shadcn-svelte.com",
-				description: "精心雕琢、无头可定制的 UI 组件库在 Svelte 生态中的典范移植。",
-				group: "研发与前沿框架",
-				tags: ["Component", "Shadcn", "UI", "Tailwind"],
+				id: "magic-ui",
+				title: "Magic UI",
+				url: "https://magicui.design/",
+				description: "与 shadcn/ui 协同的动效组件库，提供发光、粒子、打字机等 150+ 动画组件。",
+				group: "UI 组件库",
+				tags: ["Components", "Animation", "shadcn", "Tailwind"],
 				featured: true
 			},
 			{
-				id: "tailwindcss",
-				title: "Tailwind CSS v4",
-				url: "https://tailwindcss.com",
-				description: "全新纯 CSS 引擎驱动的高性能原子化 CSS 框架，零配置与瞬时编译。",
-				group: "研发与前沿框架",
-				tags: ["CSS", "Styling", "Tailwind", "Frontend"],
-				featured: true
+				id: "scrollx-ui",
+				title: "ScrollX UI",
+				url: "https://scrollxui.dev/",
+				description: "专注滚动驱动动效的组件库，基于 GSAP/Motion 打造沉浸式叙事页面。",
+				group: "UI 组件库",
+				tags: ["Components", "Scroll", "Animation", "GSAP"]
 			},
 			{
-				id: "vite",
-				title: "Vite",
-				url: "https://vitejs.dev",
-				description: "下一代前端构建工具，极速冷启动与热重载模块更新。",
-				group: "研发与前沿框架",
-				tags: ["Bundler", "Tooling", "ESM"]
+				id: "react-bits",
+				title: "React Bits",
+				url: "https://reactbits.dev/",
+				description: "动画与交互式 React 组件合集，文本特效、动态背景与 3D 元素开箱即用。",
+				group: "UI 组件库",
+				tags: ["Components", "React", "Animation", "Effects"]
 			},
 			{
-				id: "shiki",
-				title: "Shiki",
-				url: "https://shiki.style",
-				description: "基于 TextMate 语法的现代美学代码语法高亮器，精美优雅。",
-				group: "研发与前沿框架",
-				tags: ["Tooling", "SyntaxHighlight", "Markdown"]
+				id: "coss-ui",
+				title: "COSS UI",
+				url: "https://coss.com/ui",
+				description: "新一代 AI 原生应用界面精选集，高质量仪表盘、生成式工具与对话式产品 UI 参考。",
+				group: "UI 组件库",
+				tags: ["Components", "AI", "Dashboard", "Reference"]
 			}
 		]
 	},
 	{
-		id: "design-systems",
-		name: "设计系统与美学灵感",
-		description: "高品质数字界面、排版美学与微交互灵感宝库",
-		icon: "Palette",
+		id: "ui-inspiration",
+		name: "UI 设计灵感画廊",
+		description: "每日精选的界面截图灵感库与按场景分类的设计参考集",
+		icon: "Lightbulb",
 		bookmarks: [
 			{
-				id: "linear-design",
-				title: "Linear Design",
-				url: "https://linear.app",
-				description: "当代数字产品设计的工艺典范，键盘优先操作与极致暗色质感。",
-				group: "设计系统与美学灵感",
-				tags: ["DesignSystem", "Inspiration", "Craft", "SaaS"],
-				featured: true
+				id: "inspora",
+				title: "Inspora",
+				url: "https://www.inspora.design/",
+				description: "每日精选的落地页与产品界面设计灵感，高质量截图一屏速览。",
+				group: "UI 设计灵感画廊",
+				tags: ["Inspiration", "UI", "Gallery", "LandingPage"]
 			},
 			{
-				id: "rauno-me",
-				title: "Rauno Freiberg",
-				url: "https://rauno.me",
-				description: "Vercel 设计工程师的个人交互实验室与手势动效研究。",
-				group: "设计系统与美学灵感",
-				tags: ["MicroInteractions", "Portfolio", "Craft", "Animation"],
-				featured: true
+				id: "collectui",
+				title: "CollectUI",
+				url: "https://collectui.com/",
+				description: "基于 Dribbble 每日精选的 UI 灵感合集，按登录页、个人主页等场景分类检索。",
+				group: "UI 设计灵感画廊",
+				tags: ["Inspiration", "UI", "Dribbble", "Gallery"]
 			},
 			{
-				id: "emil-kowalski",
-				title: "Emil Kowalski",
-				url: "https://emilkowal.ski",
-				description: "专注极致微交互、声效反馈与动画曲线的数字工匠主页。",
-				group: "设计系统与美学灵感",
-				tags: ["Animation", "SoundDesign", "Craft", "Inspiration"],
-				featured: true
-			},
-			{
-				id: "fonts-in-use",
-				title: "Fonts In Use",
-				url: "https://fontsinuse.com",
-				description: "全球顶级出版物与品牌字体排版档案库与案例鉴赏。",
-				group: "设计系统与美学灵感",
-				tags: ["Typography", "Fonts", "Inspiration"]
-			},
-			{
-				id: "lucide",
-				title: "Lucide Icons",
-				url: "https://lucide.dev",
-				description: "风格统一、清晰锐利的开源矢量图标库，支持多框架封装。",
-				group: "设计系统与美学灵感",
-				tags: ["Icons", "DesignSystem", "Asset"]
+				id: "21st-dev",
+				title: "21st.dev",
+				url: "https://21st.dev/",
+				description: "社区驱动的 React/shadcn 组件市集，浏览精美组件与落地页区块找灵感。",
+				group: "UI 设计灵感画廊",
+				tags: ["Inspiration", "Components", "React", "shadcn"]
 			}
 		]
 	},
-	{
-		id: "ai-agents",
-		name: "AI 与智能体生态",
-		description: "大语言模型、智能编程 Agent 与前沿人机协同接口",
-		icon: "Bot",
-		bookmarks: [
-			{
-				id: "anthropic-claude",
-				title: "Anthropic Claude",
-				url: "https://claude.ai",
-				description: "具有深度推理能力、长上下文记忆与代码素养的顶级 AI 助手。",
-				group: "AI 与智能体生态",
-				tags: ["AI", "LLM", "Reasoning", "Intelligence"],
-				featured: true
-			},
-			{
-				id: "huggingface",
-				title: "Hugging Face",
-				url: "https://huggingface.co",
-				description: "全球开源机器学习与模型社区的大本营，推动开放 AI 生态。",
-				group: "AI 与智能体生态",
-				tags: ["AI", "OpenSource", "MachineLearning"]
-			},
-			{
-				id: "ollama",
-				title: "Ollama",
-				url: "https://ollama.com",
-				description: "在本地快速运行 Llama 3、DeepSeek、Qwen 等开源大模型的轻量工具。",
-				group: "AI 与智能体生态",
-				tags: ["LocalAI", "OpenSource", "CLI", "AI"]
-			}
-		]
-	},
-	{
-		id: "reading-ideas",
-		name: "技术思考与智库",
-		description: "深度的工程长文、系统架构反思与数字手记",
-		icon: "BookOpen",
-		bookmarks: [
-			{
-				id: "dan-abramov",
-				title: "Overreacted",
-				url: "https://overreacted.io",
-				description: "Dan Abramov 关于前端心理模型、软件架构与调试哲学的深邃思考。",
-				group: "技术思考与智库",
-				tags: ["Engineering", "Philosophy", "Architecture"],
-				featured: true
-			},
-			{
-				id: "simon-willison",
-				title: "Simon Willison's Weblog",
-				url: "https://simonwillison.net",
-				description: "极高更新频率的技术观察日记，涵盖 AI 安全、数据工具与开源哲学。",
-				group: "技术思考与智库",
-				tags: ["AI", "Weblog", "Engineering"]
-			},
-			{
-				id: "local-first-fm",
-				title: "Local-First Web",
-				url: "https://localfirstweb.dev",
-				description: "探索数据归属权、离线优先协作与 CRDT 分布式协议的前沿智库。",
-				group: "技术思考与智库",
-				tags: ["LocalFirst", "CRDTs", "Architecture"]
-			}
-		]
-	}
 ];
 
 // 获取全部标签列表（去重）

@@ -13,6 +13,7 @@
 		Palette,
 		Bot,
 		BookOpen,
+		Lightbulb,
 		Sparkles
 	} from "@lucide/svelte";
 	import { bookmarkGroups, getAllTags } from "$lib/data/bookmarks";
@@ -81,6 +82,10 @@
 				return Bot;
 			case "BookOpen":
 				return BookOpen;
+			case "Lightbulb":
+				return Lightbulb;
+			case "Sparkles":
+				return Sparkles;
 			default:
 				return Bookmark;
 		}
