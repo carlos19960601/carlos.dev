@@ -81,7 +81,7 @@
 			{/each}
 		</div>
 
-		<!-- 个人核心联系信息与社交主页 (Email, GitHub, Twitter) -->
+		<!-- 个人核心联系信息与社交主页 (Email, GitHub) -->
 		<div class="pt-2 flex items-center gap-2.5 flex-wrap">
 			<Button
 				variant="outline"
@@ -111,19 +111,6 @@
 					<span>{data.profile.email}</span>
 					<Copy class="w-3 h-3 opacity-60 ml-0.5" />
 				{/if}
-			</Button>
-
-			<Button
-				variant="outline"
-				size="sm"
-				href={data.profile.socials.find((s) => s.name.includes("Twitter"))?.url || "https://twitter.com"}
-				target="_blank"
-				rel="noopener noreferrer"
-				onclick={playClickSound}
-				class="gap-1.5 rounded-full h-8 px-3 text-xs bg-card/80 border-border/80"
-			>
-				<span>Twitter / X</span>
-				<ExternalLink class="w-3 h-3 opacity-60 ml-0.5" />
 			</Button>
 		</div>
 	</section>

@@ -39,8 +39,8 @@ export const profile: Profile = {
 	title: "Full-Stack Engineer & Design Technologist",
 	bio: "专注高品质 Web 体验、前端工程与微交互。热衷于把复杂系统转化为优雅、直觉的数字产品。",
 	location: "Shanghai / Remote",
-	email: "carlos.dev@example.com",
-	avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80",
+	email: "zengqiang96@gmail.com",
+	avatar: "/avatar.jpg",
 	status: "Exploring craft & system interfaces",
 	about: [
 		"你好，我是 Carlos。我是一名跨界全栈工程师与设计技术探索者，常年探索前端工程、系统架构与极致交互界面的交汇点。",
@@ -49,23 +49,18 @@ export const profile: Profile = {
 	socials: [
 		{
 			name: "GitHub",
-			label: "github.com/carlos",
-			url: "https://github.com",
+			label: "github.com/carlos19960601",
+			url: "https://github.com/carlos19960601",
 			icon: "github"
 		},
 		{
 			name: "Email",
-			label: "carlos.dev@example.com",
-			url: "mailto:carlos.dev@example.com",
+			label: "zengqiang96@gmail.com",
+			url: "mailto:zengqiang96@gmail.com",
 			icon: "mail"
-		},
-		{
-			name: "Twitter / X",
-			label: "@carlos_dev",
-			url: "https://twitter.com",
-			icon: "twitter"
 		}
 	],
+
 	skills: [
 		{
 			category: "Frontend & Craft",
@@ -82,49 +77,25 @@ export const profile: Profile = {
 	],
 	projects: [
 		{
-			id: "quantum-ui",
-			title: "Quantum UI System",
-			tagline: "极简轻量、基于 Svelte 5 的现代化设计系统",
-			description: "一套专为高密度信息流与深色阅读场景优化的组件库，包含动态灵动岛目录、微音效触控反馈及平滑手势交互。",
-			tags: ["Svelte 5", "TypeScript", "Tailwind CSS", "Shadcn"],
-			github: "https://github.com/carlos/quantum-ui",
-			demo: "https://quantum-ui.dev",
+			id: "devbox",
+			title: "DevBox",
+			tagline: "面向软件、硬件与安全专业人员的通用开发工具包",
+			description: "跨平台（macOS / Linux / Windows）开发工具集，内置 JSON 格式化（自动去转义）、Base64 编解码、UUID/Nanoid 生成、Unix 时间戳转换、颜色转换、Cron 解析、文本对比及 JSON 转 Schema 等实用工具。",
+			tags: ["Developer Tools", "Desktop App", "JSON", "Cross Platform"],
+			github: "https://github.com/carlos19960601/DevBox",
 			featured: true,
-			year: "2026",
-			status: "Active"
-		},
-		{
-			id: "sonic-reader",
-			title: "Sonic Reader MDX",
-			tagline: "带动态交互与微音效的长文阅读引擎",
-			description: "深度定制的 Markdown/MDX 渲染架构，支持零客户端 JS 开销的编译期 TOC 提取、阅读进度感知以及平滑锚点驱动。",
-			tags: ["SvelteKit", "Markdown", "Shiki", "Web Audio"],
-			github: "https://github.com/carlos/sonic-reader",
-			demo: "https://sonic-reader.dev",
-			featured: true,
-			year: "2025",
-			status: "Shipped"
-		},
-		{
-			id: "lattice-db",
-			title: "Lattice Sync",
-			tagline: "本地优先的端对端多维知识与书签同步协议",
-			description: "轻量级 Local-First 收藏夹与阅读笔记协同方案，支持双向链接、全文检索与端侧加密同步。",
-			tags: ["TypeScript", "IndexedDB", "CRDTs", "Wasm"],
-			github: "https://github.com/carlos/lattice-sync",
-			featured: false,
 			year: "2025",
 			status: "Active"
 		},
 		{
-			id: "paper-type",
-			title: "Paper Type Tokens",
-			tagline: "专为数字出版打造的高级衬线排版规范与样式集",
-			description: "基于 Newsreader 与黄金比例字阶的排版工具集，兼顾中西文混排节奏与暗色模式视觉比重。",
-			tags: ["Typography", "CSS Architecture", "Design Tokens"],
-			github: "https://github.com/carlos/paper-type",
+			id: "trplayer",
+			title: "TrPlayer",
+			tagline: "支持转录与 LLM 智能翻译字幕的视频播放器",
+			description: "基于 Electron 的桌面视频播放器，内置 Whisper 模型管理与字幕转录，可调用 OpenRouter / Ollama / SiliconFlow / OpenAI 等大模型翻译字幕，并支持导出 ASS 字幕文件与视频。",
+			tags: ["Electron", "Whisper", "LLM", "ffmpeg"],
+			github: "https://github.com/carlos19960601/trplayer",
 			featured: true,
-			year: "2024",
+			year: "2025",
 			status: "Shipped"
 		}
 	]
