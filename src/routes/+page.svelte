@@ -18,11 +18,23 @@
 		BookOpen
 	} from "@lucide/svelte";
 	import { playClickSound, playSuccessSound } from "$lib/sound";
+	import { getAllBookmarks } from "$lib/data/bookmarks";
 	import type { PageData } from "./$types";
 
 	let { data }: { data: PageData } = $props();
 	let emailCopied = $state(false);
 
+	// GitHub 主页链接(从社交配置中提取,缺省回退官网)
+	const githubUrl = $derived(
+		data.profile.socials.find((s) => s.name === "GitHub")?.url ?? "https://github.com"
+	);
+
+	// 首页速览的精选书签(最多 4 个)
+	const featuredBookmarks = $derived(
+		getAllBookmarks().filter((b) => b.featured).slice(0, 4)
+	);
+
+	/** 复制邮箱地址到剪贴板,并展示 2 秒成功反馈 */
 	function copyEmail() {
 		playClickSound();
 		navigator.clipboard.writeText(data.profile.email).then(() => {
@@ -86,7 +98,7 @@
 			<Button
 				variant="outline"
 				size="sm"
-				href={data.profile.socials.find((s) => s.name === "GitHub")?.url || "https://github.com"}
+				href={githubUrl}
 				target="_blank"
 				rel="noopener noreferrer"
 				onclick={playClickSound}
@@ -272,7 +284,7 @@
 		</p>
 
 		<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-			{#each data.bookmarkGroups.flatMap((g) => g.bookmarks).filter((b) => b.featured).slice(0, 4) as bm}
+			{#each featuredBookmarks as bm}
 				<a
 					href="/bookmarks"
 					onclick={playClickSound}
