@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, onDestroy } from "svelte";
+	import { onMount } from "svelte";
 	import type { TocItem } from "$lib/types";
 	import { playClickSound, playPopSound } from "$lib/sound";
 
@@ -10,64 +10,66 @@
 
 	let { toc = [], articleTitle = "Table of Contents" }: Props = $props();
 
+	// 组件状态:是否展开目录抽屉 / 当前激活章节锚点 / 页面滚动进度
 	let isExpanded = $state(false);
 	let activeId = $state("");
 	let scrollProgress = $state(0);
-	let currentTitle = $state("");
 
-	// 计算环形进度条的 SVG 参数
+	// 环形进度条的 SVG 几何参数
 	const radius = 10;
 	const circumference = 2 * Math.PI * radius;
 	let strokeDashoffset = $derived(
 		circumference - (scrollProgress / 100) * circumference
 	);
 
-	let observer: IntersectionObserver | null = null;
+	// 当前展示的章节标题:优先匹配激活章节,其次回退到首章,最后用文章标题
+	const currentTitle = $derived(
+		toc.find((item) => item.id === activeId)?.text ?? toc[0]?.text ?? articleTitle
+	);
 
+	/** 根据窗口滚动位置更新 0-100 的阅读进度 */
 	function updateScrollProgress() {
 		const scrollTop = window.scrollY || document.documentElement.scrollTop;
 		const docHeight =
 			document.documentElement.scrollHeight - document.documentElement.clientHeight;
 		if (docHeight > 0) {
-			const progress = Math.min(100, Math.max(0, (scrollTop / docHeight) * 100));
-			scrollProgress = progress;
+			scrollProgress = Math.min(100, Math.max(0, (scrollTop / docHeight) * 100));
 		}
 	}
 
 	onMount(() => {
-		// 监听滚动进度
+		// 1) 监听滚动,实时更新阅读进度
 		window.addEventListener("scroll", updateScrollProgress, { passive: true });
 		updateScrollProgress();
 
-		// 监听文章各章节 Heading 进入视口
-		if (typeof window !== "undefined" && "IntersectionObserver" in window) {
+		// 2) 观察文章各章节标题,视口内最靠上的章节视为"当前章节"
+		let observer: IntersectionObserver | null = null;
+		if ("IntersectionObserver" in window) {
 			observer = new IntersectionObserver(
 				(entries) => {
-					// 寻找当前视口中最相关的活跃标题
 					const intersecting = entries.filter((e) => e.isIntersecting);
 					if (intersecting.length > 0) {
-						// 取最顶部的那个
+						// 取视口内最顶部的那个标题作为激活项
 						intersecting.sort(
 							(a, b) => a.boundingClientRect.top - b.boundingClientRect.top
 						);
-						const topEntry = intersecting[0];
-						activeId = topEntry.target.id;
+						activeId = intersecting[0].target.id;
 					}
 				},
 				{
+					// 触发线位于视口上方 35% 处,更贴近"阅读位置"直觉
 					rootMargin: "0% 0% -65% 0%",
 					threshold: [0, 0.5, 1.0]
 				}
 			);
 
-			// 观察所有收集到的 toc id 对应元素
 			for (const item of toc) {
 				const el = document.getElementById(item.id);
 				if (el) observer.observe(el);
 			}
 		}
 
-		// 监听 ESC 键关闭展开的 TOC
+		// 3) ESC 键快捷关闭展开的目录抽屉
 		function handleKeyDown(e: KeyboardEvent) {
 			if (e.key === "Escape" && isExpanded) {
 				isExpanded = false;
@@ -76,34 +78,15 @@
 		}
 		window.addEventListener("keydown", handleKeyDown);
 
+		// 统一清理:卸载时移除全部监听并断开观察器
 		return () => {
+			window.removeEventListener("scroll", updateScrollProgress);
 			window.removeEventListener("keydown", handleKeyDown);
+			observer?.disconnect();
 		};
 	});
 
-	onDestroy(() => {
-		if (typeof window !== "undefined") {
-			window.removeEventListener("scroll", updateScrollProgress);
-			if (observer) observer.disconnect();
-		}
-	});
-
-	// 根据 activeId 更新当前显示的章节文本
-	$effect(() => {
-		if (activeId) {
-			const match = toc.find((item) => item.id === activeId);
-			if (match) {
-				currentTitle = match.text;
-				return;
-			}
-		}
-		if (toc.length > 0 && !currentTitle) {
-			currentTitle = toc[0].text;
-		} else if (!currentTitle) {
-			currentTitle = articleTitle;
-		}
-	});
-
+	/** 展开/收起底部目录抽屉,并给出对应音效反馈 */
 	function toggleExpand() {
 		isExpanded = !isExpanded;
 		if (isExpanded) {
@@ -113,19 +96,18 @@
 		}
 	}
 
+	/** 平滑滚动到指定章节,随后自动收起抽屉 */
 	function scrollToHeading(id: string) {
 		playClickSound();
 		activeId = id;
-		const el = document.getElementById(id);
-		if (el) {
-			el.scrollIntoView({ behavior: "smooth", block: "start" });
-		}
-		// 选择完成后自动折叠面板，还原视频体验
+		document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+		// 延迟收起,给滚动动画留出起始时间
 		setTimeout(() => {
 			isExpanded = false;
 		}, 180);
 	}
 
+	/** 点击遮罩关闭抽屉 */
 	function handleBackdropClick() {
 		isExpanded = false;
 		playClickSound();
@@ -133,7 +115,7 @@
 </script>
 
 {#if toc.length > 0}
-	<!-- 背景遮罩（展开时阻断底层但保持轻盈模糊） -->
+	<!-- 背景遮罩(展开时阻断底层但保持轻盈模糊) -->
 	{#if isExpanded}
 		<div
 			role="button"
@@ -149,7 +131,7 @@
 	<div
 		class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center select-none"
 	>
-		<!-- 展开态：向上弹出的目录大卡片抽屉 (完全还原参考视频 frame_06, frame_10) -->
+		<!-- 展开态:向上弹出的目录大卡片抽屉 -->
 		{#if isExpanded}
 			<div
 				class="mb-3 w-[92vw] max-w-[430px] rounded-3xl bg-neutral-950/95 dark:bg-[#0a0a0b]/95 text-neutral-200 border border-neutral-800/80 shadow-2xl backdrop-blur-xl p-5 overflow-hidden transition-all duration-300 animate-in fade-in slide-in-from-bottom-3"
@@ -184,7 +166,7 @@
 			</div>
 		{/if}
 
-		<!-- 常态：黑色胶囊药丸 (Pill) -->
+		<!-- 常态:黑色胶囊药丸 (Pill) -->
 		<button
 			type="button"
 			onclick={toggleExpand}
@@ -192,7 +174,7 @@
 			aria-expanded={isExpanded}
 			aria-label="切换文章目录导航"
 		>
-			<!-- 左侧指示小圆球 (带柔和渐变与微光) -->
+			<!-- 左侧指示小圆球(带柔和渐变与微光) -->
 			<div
 				class="w-6 h-6 rounded-full bg-gradient-to-tr from-sky-400 to-indigo-300 shadow-[0_0_10px_rgba(56,189,248,0.35)] flex items-center justify-center shrink-0 transition-transform group-hover:scale-105"
 			>
@@ -204,7 +186,7 @@
 				class="truncate flex-1 text-[13px] font-medium tracking-tight text-left text-neutral-200 group-hover:text-white transition-colors"
 				title={currentTitle}
 			>
-				{currentTitle || articleTitle}
+				{currentTitle}
 			</span>
 
 			<!-- 右侧环形阅读进度圈 (Circle Progress) -->

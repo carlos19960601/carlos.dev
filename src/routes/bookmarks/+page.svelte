@@ -25,7 +25,15 @@
 
 	const allTags = ["All", ...getAllTags()];
 
-	// 根据搜索词和标签过滤书签列表
+	// 分组图标名 → 图标组件映射(书签数据只存图标名字符串,在此集中转换)
+	const GROUP_ICONS = { Code2, Palette, Bot, BookOpen, Lightbulb, Sparkles } as const;
+
+	/** 根据分组配置的图标名取对应组件,未知名称回退到默认书签图标 */
+	function getGroupIcon(name: string) {
+		return GROUP_ICONS[name as keyof typeof GROUP_ICONS] ?? Bookmark;
+	}
+
+	// 根据搜索词和标签过滤书签:保留仍有匹配项的分组,空分组剔除
 	const filteredGroups = $derived(
 		bookmarkGroups
 			.map((group) => {
@@ -51,7 +59,7 @@
 			.filter((group) => group.bookmarks.length > 0)
 	);
 
-	// 总匹配计数
+	// 当前筛选命中的书签总数
 	const totalCount = $derived(
 		filteredGroups.reduce((acc, g) => acc + g.bookmarks.length, 0)
 	);
@@ -61,6 +69,7 @@
 		selectedTag = tag;
 	}
 
+	/** 复制书签网址到剪贴板,并展示 1.8 秒成功反馈 */
 	function copyUrl(id: string, url: string) {
 		playClickSound();
 		navigator.clipboard.writeText(url).then(() => {
@@ -70,25 +79,6 @@
 				if (copiedId === id) copiedId = null;
 			}, 1800);
 		});
-	}
-
-	function getGroupIcon(name: string) {
-		switch (name) {
-			case "Code2":
-				return Code2;
-			case "Palette":
-				return Palette;
-			case "Bot":
-				return Bot;
-			case "BookOpen":
-				return BookOpen;
-			case "Lightbulb":
-				return Lightbulb;
-			case "Sparkles":
-				return Sparkles;
-			default:
-				return Bookmark;
-		}
 	}
 </script>
 

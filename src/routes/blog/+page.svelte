@@ -11,13 +11,13 @@
 	let searchQuery = $state("");
 	let selectedTag = $state("All");
 
-	// 汇总所有文章标签
+	// 汇总所有文章标签并去重排序("All" 固定在首位)
 	const allTags = $derived([
 		"All",
 		...Array.from(new Set(data.posts.flatMap((p) => p.tags))).sort()
 	]);
 
-	// 过滤文章
+	// 当前筛选结果:需同时满足标签匹配与搜索词(标题/摘要/标签,不区分大小写)
 	const filteredPosts = $derived(
 		data.posts.filter((post) => {
 			const matchesTag =

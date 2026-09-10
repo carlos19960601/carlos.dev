@@ -10,8 +10,7 @@
 		Sun,
 		Moon,
 		BookOpen,
-		Bookmark,
-		FolderGit2
+		Bookmark
 	} from "@lucide/svelte";
 	import {
 		initSound,
@@ -37,22 +36,20 @@
 		isDark = document.documentElement.classList.contains("dark");
 	});
 
+	/** 切换音效开关(含持久化与确认音) */
 	function handleToggleSound() {
 		soundOn = toggleSound();
 	}
 
+	/** 切换深/浅主题:同步 <html> 上的 dark 类与 localStorage 持久化 */
 	function handleToggleTheme() {
 		isDark = !isDark;
-		if (isDark) {
-			document.documentElement.classList.add("dark");
-			localStorage.setItem("site_theme", "dark");
-		} else {
-			document.documentElement.classList.remove("dark");
-			localStorage.setItem("site_theme", "light");
-		}
+		document.documentElement.classList.toggle("dark", isDark);
+		localStorage.setItem("site_theme", isDark ? "dark" : "light");
 		playToggleSound(isDark);
 	}
 
+	/** 返回上一页:有历史记录且不在首页时优先 history.back(),否则跳转 backUrl */
 	function handleBack() {
 		playClickSound();
 		if (window.history.length > 1 && !page.url.pathname.endsWith("/")) {
@@ -62,6 +59,7 @@
 		}
 	}
 
+	/** 首页链接点击音效 */
 	function handleHomeClick() {
 		playClickSound();
 	}
