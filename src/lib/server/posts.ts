@@ -68,14 +68,20 @@ export function parsePostSource(filePath: string, raw: string): PostSource {
 	};
 }
 
+/** 列表缓存:构建后文章内容不可变,进程内 memo 即可(dev 下 HMR 重载模块自动失效) */
+let cachedMetas: PostMeta[] | null = null;
+
 /**
  * 获取全部文章元数据,按发布日期(publishedAt)降序排列。
  * 供博客列表页与首页「最新文章」区块使用。
  */
 export function getAllPostMetas(): PostMeta[] {
-	return Object.entries(markdownFiles)
-		.map(([filePath, raw]) => parsePostSource(filePath, raw).meta)
-		.sort((a, b) => (a.publishedAt < b.publishedAt ? 1 : -1));
+	if (!cachedMetas) {
+		cachedMetas = Object.entries(markdownFiles)
+			.map(([filePath, raw]) => parsePostSource(filePath, raw).meta)
+			.sort((a, b) => (a.publishedAt < b.publishedAt ? 1 : -1));
+	}
+	return cachedMetas;
 }
 
 /**
@@ -87,4 +93,26 @@ export function findPostSourceBySlug(slug: string): PostSource | null {
 		filePath.endsWith(`/${slug}.md`),
 	);
 	return entry ? parsePostSource(entry[0], entry[1]) : null;
+}
+
+/** 相邻文章导航信息(基于发布日期降序列表计算) */
+export interface AdjacentPosts {
+	/** 发布日期更晚的一篇(列表中索引更小),没有则为 null */
+	prev: PostMeta | null;
+	/** 发布日期更早的一篇(列表中索引更大),没有则为 null */
+	next: PostMeta | null;
+}
+
+/**
+ * 计算指定文章的上一篇/下一篇导航(按发布日期降序)。
+ * 文章不存在时返回 { prev: null, next: null }。
+ */
+export function getAdjacentPosts(slug: string): AdjacentPosts {
+	const metas = getAllPostMetas();
+	const index = metas.findIndex((meta) => meta.slug === slug);
+	if (index === -1) return { prev: null, next: null };
+	return {
+		prev: index > 0 ? metas[index - 1] : null,
+		next: index < metas.length - 1 ? metas[index + 1] : null,
+	};
 }

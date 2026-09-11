@@ -1,9 +1,10 @@
 <script lang="ts">
 	import HeaderNav from "$lib/components/HeaderNav.svelte";
+	import PostListItem from "$lib/components/PostListItem.svelte";
 	import { Input } from "$lib/components/ui/input";
-	import { Badge } from "$lib/components/ui/badge";
-	import { Search, Clock, Calendar, ArrowUpRight, BookOpen } from "@lucide/svelte";
+	import { Search, BookOpen } from "@lucide/svelte";
 	import { playClickSound } from "$lib/sound";
+	import { matchesQuery } from "$lib/filter";
 	import type { PageData } from "./$types";
 
 	let { data }: { data: PageData } = $props();
@@ -19,17 +20,11 @@
 
 	// 当前筛选结果:需同时满足标签匹配与搜索词(标题/摘要/标签,不区分大小写)
 	const filteredPosts = $derived(
-		data.posts.filter((post) => {
-			const matchesTag =
-				selectedTag === "All" || post.tags.includes(selectedTag);
-			const matchesSearch =
-				searchQuery.trim() === "" ||
-				post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-				post.summary.toLowerCase().includes(searchQuery.toLowerCase()) ||
-				post.tags.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase()));
-
-			return matchesTag && matchesSearch;
-		})
+		data.posts.filter(
+			(post) =>
+				(selectedTag === "All" || post.tags.includes(selectedTag)) &&
+				matchesQuery(searchQuery, post.title, post.summary, post.tags.join(" ")),
+		)
 	);
 
 	function selectTag(tag: string) {
@@ -93,43 +88,8 @@
 	<!-- 文章列表 -->
 	{#if filteredPosts.length > 0}
 		<div class="divide-y divide-border/60">
-			{#each filteredPosts as post}
-				<article class="py-6 first:pt-0 group">
-					<a
-						href="/blog/{post.slug}"
-						onclick={playClickSound}
-						class="block group-hover:translate-x-0.5 transition-transform duration-200"
-					>
-						<div class="flex items-center gap-2.5 text-xs text-muted-foreground font-mono mb-2">
-							<span class="flex items-center gap-1">
-								<Calendar class="w-3.5 h-3.5 opacity-70" />
-								{post.date}
-							</span>
-							<span>•</span>
-							<span class="flex items-center gap-1">
-								<Clock class="w-3.5 h-3.5 opacity-70" />
-								{post.readTime}
-							</span>
-						</div>
-
-						<h2 class="text-xl sm:text-2xl font-serif-title text-foreground group-hover:text-foreground/80 transition-colors mb-2 flex items-center justify-between">
-							<span>{post.title}</span>
-							<ArrowUpRight class="w-4 h-4 text-muted-foreground group-hover:text-foreground group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 ml-2 opacity-0 group-hover:opacity-100" />
-						</h2>
-
-						<p class="text-sm text-muted-foreground leading-relaxed line-clamp-2 mb-3">
-							{post.summary}
-						</p>
-
-						<div class="flex items-center gap-1.5 flex-wrap">
-							{#each post.tags as tag}
-								<Badge variant="subtle" class="text-[11px] px-2 py-0.5">
-									#{tag}
-								</Badge>
-							{/each}
-						</div>
-					</a>
-				</article>
+			{#each filteredPosts as post (post.slug)}
+				<PostListItem {post} />
 			{/each}
 		</div>
 	{:else}

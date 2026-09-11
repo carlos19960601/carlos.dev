@@ -1,6 +1,7 @@
 <script lang="ts">
 	import HeaderNav from "$lib/components/HeaderNav.svelte";
 	import GithubIcon from "$lib/components/icons/GithubIcon.svelte";
+	import PostListItem from "$lib/components/PostListItem.svelte";
 	import { Button } from "$lib/components/ui/button";
 	import { Badge } from "$lib/components/ui/badge";
 	import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "$lib/components/ui/card";
@@ -8,8 +9,6 @@
 		Mail,
 		ExternalLink,
 		ArrowRight,
-		Calendar,
-		Clock,
 		Sparkles,
 		Bookmark,
 		Check,
@@ -226,36 +225,8 @@
 		</div>
 
 		<div class="divide-y divide-border/60">
-			{#each data.recentPosts as post}
-				<article class="py-4.5 first:pt-0 group">
-					<a
-						href="/blog/{post.slug}"
-						onclick={playClickSound}
-						class="block group-hover:translate-x-0.5 transition-transform duration-200"
-					>
-						<div class="flex items-center gap-2 text-xs text-muted-foreground font-mono mb-1.5">
-							<span>{post.date}</span>
-							<span>•</span>
-							<span>{post.readTime}</span>
-						</div>
-
-						<h3 class="text-lg font-serif-title text-foreground group-hover:text-foreground/80 transition-colors mb-1.5">
-							{post.title}
-						</h3>
-
-						<p class="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-relaxed mb-2.5">
-							{post.summary}
-						</p>
-
-						<div class="flex items-center gap-1.5 flex-wrap">
-							{#each post.tags as tag}
-								<Badge variant="subtle" class="text-[10px] px-2 py-0.2">
-									#{tag}
-								</Badge>
-							{/each}
-						</div>
-					</a>
-				</article>
+			{#each data.recentPosts as post (post.slug)}
+				<PostListItem {post} compact />
 			{/each}
 		</div>
 	</section>

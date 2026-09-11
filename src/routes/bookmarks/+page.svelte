@@ -18,6 +18,7 @@
 	} from "@lucide/svelte";
 	import { bookmarkGroups, getAllTags } from "$lib/data/bookmarks";
 	import { playClickSound, playSuccessSound } from "$lib/sound";
+	import { matchesQuery } from "$lib/filter";
 
 	let searchQuery = $state("");
 	let selectedTag = $state("All");
@@ -36,26 +37,20 @@
 	// 根据搜索词和标签过滤书签:保留仍有匹配项的分组,空分组剔除
 	const filteredGroups = $derived(
 		bookmarkGroups
-			.map((group) => {
-				const matchingBookmarks = group.bookmarks.filter((bm) => {
-					const matchTag =
-						selectedTag === "All" || bm.tags.includes(selectedTag);
-					const query = searchQuery.trim().toLowerCase();
-					const matchQuery =
-						!query ||
-						bm.title.toLowerCase().includes(query) ||
-						bm.description.toLowerCase().includes(query) ||
-						bm.url.toLowerCase().includes(query) ||
-						bm.tags.some((t) => t.toLowerCase().includes(query));
-
-					return matchTag && matchQuery;
-				});
-
-				return {
-					...group,
-					bookmarks: matchingBookmarks
-				};
-			})
+			.map((group) => ({
+				...group,
+				bookmarks: group.bookmarks.filter(
+					(bm) =>
+						(selectedTag === "All" || bm.tags.includes(selectedTag)) &&
+						matchesQuery(
+							searchQuery,
+							bm.title,
+							bm.description,
+							bm.url,
+							bm.tags.join(" "),
+						),
+				),
+			}))
 			.filter((group) => group.bookmarks.length > 0)
 	);
 

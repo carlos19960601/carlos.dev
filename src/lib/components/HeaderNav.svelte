@@ -49,10 +49,10 @@
 		playToggleSound(isDark);
 	}
 
-	/** 返回上一页:有历史记录且不在首页时优先 history.back(),否则跳转 backUrl */
+	/** 返回上一页:有历史记录时优先 history.back(),否则跳转 backUrl */
 	function handleBack() {
 		playClickSound();
-		if (window.history.length > 1 && !page.url.pathname.endsWith("/")) {
+		if (window.history.length > 1) {
 			window.history.back();
 		} else {
 			goto(backUrl);

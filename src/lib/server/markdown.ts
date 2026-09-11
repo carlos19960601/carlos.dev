@@ -179,23 +179,23 @@ function createRenderer(toc: TocItem[], highlighter: Highlighter): Renderer {
 	// ---- 代码块:双主题高亮 + 语言标签 + 复制按钮 ----
 	renderer.code = ({ text, lang }) => {
 		const safeLang = lang || "text";
-		let lightHtml = "";
-		let darkHtml = "";
 
+		// 用一次调用输出双主题单份 HTML:每个 token 同时携带
+		// --shiki-light / --shiki-dark CSS 变量,由客户端样式按
+		// html.dark 切换,相比“亮暗各渲染一份”体积直接减半
+		let codeHtml: string;
 		try {
-			// 亮/暗两套主题各渲染一份,由外层容器按 dark: 变体切换显隐
-			lightHtml = highlighter.codeToHtml(text, {
+			codeHtml = highlighter.codeToHtml(text, {
 				lang: safeLang,
-				theme: "github-light",
-			});
-			darkHtml = highlighter.codeToHtml(text, {
-				lang: safeLang,
-				theme: "github-dark-high-contrast",
+				themes: {
+					light: "github-light",
+					dark: "github-dark-high-contrast",
+				},
+				defaultColor: false,
 			});
 		} catch {
 			// 语言未注册等异常时降级为转义后的纯文本
-			lightHtml = `<pre><code>${escapeHtml(text)}</code></pre>`;
-			darkHtml = lightHtml;
+			codeHtml = `<pre><code>${escapeHtml(text)}</code></pre>`;
 		}
 
 		// 复制按钮的代码内容经 encodeURIComponent 编码后放入 data 属性,
@@ -216,8 +216,7 @@ function createRenderer(toc: TocItem[], highlighter: Highlighter): Renderer {
 					</button>
 				</div>
 				<div class="p-4 overflow-x-auto text-[13.5px] leading-relaxed font-mono">
-					<div class="dark:hidden">${lightHtml}</div>
-					<div class="hidden dark:block">${darkHtml}</div>
+					<div>${codeHtml}</div>
 				</div>
 			</div>
 		`;
