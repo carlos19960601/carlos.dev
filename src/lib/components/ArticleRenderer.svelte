@@ -158,14 +158,20 @@
 		}
 	}
 
-	/* 双重保险:确保代码块与图表在 .dark 类切换时 100% 显隐正确 */
-	:global(html.dark .dark\:hidden) {
-		display: none !important;
+	/* Shiki 双主题单份 HTML:服务端以 defaultColor:false 输出,每个 token
+	 同时携带 --shiki-light / --shiki-dark 变量,这里按 html.dark 切换取值 */
+	:global(html:not(.dark) .prose-container .shiki),
+	:global(html:not(.dark) .prose-container .shiki span) {
+		color: var(--shiki-light);
+		font-style: var(--shiki-light-font-style);
+		font-weight: var(--shiki-light-font-weight);
+		text-decoration: var(--shiki-light-text-decoration);
 	}
-	:global(html.dark .hidden.dark\:block) {
-		display: block !important;
-	}
-	:global(html:not(.dark) .hidden.dark\:block) {
-		display: none !important;
+	:global(html.dark .prose-container .shiki),
+	:global(html.dark .prose-container .shiki span) {
+		color: var(--shiki-dark);
+		font-style: var(--shiki-dark-font-style);
+		font-weight: var(--shiki-dark-font-weight);
+		text-decoration: var(--shiki-dark-text-decoration);
 	}
 </style>

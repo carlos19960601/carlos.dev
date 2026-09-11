@@ -284,15 +284,4 @@
 		border-radius: 0;
 		border: none;
 	}
-
-	/* 确保图表在 dark 模式下精准切换 */
-	:global(html.dark) .dark\:hidden {
-		display: none !important;
-	}
-	:global(html.dark) .hidden.dark\:block {
-		display: block !important;
-	}
-	:global(html:not(.dark)) .hidden.dark\:block {
-		display: none !important;
-	}
 </style>
