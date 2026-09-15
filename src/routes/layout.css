@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 
 @custom-variant dark (&:where(.dark, .dark *));
+@custom-variant reading-wide (&:where(.reading-wide, .reading-wide *));
 
 @theme {
   --font-serif: "Newsreader", Georgia, "Times New Roman", Cambria, serif;

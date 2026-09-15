@@ -10,7 +10,9 @@
 		Sun,
 		Moon,
 		BookOpen,
-		Bookmark
+		Bookmark,
+		UnfoldHorizontal,
+		FoldHorizontal
 	} from "@lucide/svelte";
 	import {
 		initSound,
@@ -19,6 +21,11 @@
 		playClickSound,
 		playToggleSound
 	} from "$lib/sound";
+	import {
+		isReadingWidePreferred,
+		applyReadingWide,
+		toggleReadingWide
+	} from "$lib/reading-width";
 
 	interface Props {
 		showBack?: boolean;
@@ -29,11 +36,14 @@
 
 	let soundOn = $state(true);
 	let isDark = $state(false);
+	let isWide = $state(false);
 
 	onMount(() => {
 		initSound();
 		soundOn = isSoundEnabled();
 		isDark = document.documentElement.classList.contains("dark");
+		isWide = isReadingWidePreferred();
+		applyReadingWide(isWide);
 	});
 
 	/** 切换音效开关(含持久化与确认音) */
@@ -63,10 +73,16 @@
 	function handleHomeClick() {
 		playClickSound();
 	}
+
+	/** 切换全站版面宽/窄屏 */
+	function handleToggleWidth() {
+		isWide = toggleReadingWide();
+		playToggleSound(isWide);
+	}
 </script>
 
 <header class="fixed top-5 inset-x-0 z-40 pointer-events-none px-4 sm:px-6">
-	<div class="max-w-4xl mx-auto flex items-center justify-between">
+	<div class="max-w-4xl reading-wide:max-w-[1100px] mx-auto flex items-center justify-between transition-[max-width] duration-300 ease-out">
 		<!-- 左侧悬浮胶囊：首页、返回与核心路由导航 -->
 		<div
 			class="pointer-events-auto flex items-center gap-1 p-1 rounded-full bg-card/90 dark:bg-neutral-900/90 backdrop-blur-md border border-border/80 shadow-xs transition-all duration-200"
@@ -115,10 +131,25 @@
 			</a>
 		</div>
 
-		<!-- 右侧悬浮胶囊：声音反馈与深浅主题切换 -->
+		<!-- 右侧悬浮胶囊：阅读宽度、声音反馈与深浅主题 -->
 		<div
 			class="pointer-events-auto flex items-center gap-1 p-1 rounded-full bg-card/90 dark:bg-neutral-900/90 backdrop-blur-md border border-border/80 shadow-xs transition-all duration-200"
 		>
+			<button
+				type="button"
+				onclick={handleToggleWidth}
+				class="hidden sm:inline-flex items-center justify-center h-8 w-8 rounded-full text-foreground/80 hover:text-foreground hover:bg-muted/80 active:scale-95 transition-all cursor-pointer"
+				title={isWide ? "切换为窄屏" : "切换为宽屏"}
+				aria-label={isWide ? "切换为窄屏" : "切换为宽屏"}
+				aria-pressed={isWide}
+			>
+				{#if isWide}
+					<FoldHorizontal class="w-4 h-4" />
+				{:else}
+					<UnfoldHorizontal class="w-4 h-4" />
+				{/if}
+			</button>
+
 			<button
 				type="button"
 				onclick={handleToggleSound}
