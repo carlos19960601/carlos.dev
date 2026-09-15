@@ -87,7 +87,7 @@
 
 <HeaderNav showBack={true} backUrl="/" />
 
-<main class="min-h-screen pt-28 pb-24 px-5 sm:px-8 max-w-4xl mx-auto">
+<main class="min-h-screen pt-28 pb-24 px-5 sm:px-8 max-w-4xl reading-wide:max-w-[1100px] mx-auto transition-[max-width] duration-300 ease-out">
 	<!-- 页面大标题 -->
 	<header class="mb-10 sm:mb-12">
 		<div class="flex items-center gap-2 text-xs font-mono text-muted-foreground uppercase tracking-wider mb-2">

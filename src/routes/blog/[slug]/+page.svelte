@@ -19,7 +19,7 @@
 <HeaderNav showBack={true} backUrl="/blog" />
 
 <!-- 主文章阅读区 -->
-<article class="min-h-screen pt-28 pb-32 px-5 sm:px-8 max-w-[700px] mx-auto">
+<article class="min-h-screen pt-28 pb-32 px-5 sm:px-8 max-w-[700px] reading-wide:max-w-[1100px] mx-auto transition-[max-width] duration-300 ease-out">
 	<!-- 文章题头 -->
 	<header class="mb-6 sm:mb-8">
 		<h1 class="text-3xl sm:text-4xl lg:text-[42px] font-serif-title text-foreground tracking-tight leading-[1.18] mb-3.5">

@@ -53,7 +53,7 @@
 
 <HeaderNav />
 
-<main class="min-h-screen pt-28 pb-24 px-5 sm:px-8 max-w-3xl mx-auto space-y-20">
+<main class="min-h-screen pt-28 pb-24 px-5 sm:px-8 max-w-3xl reading-wide:max-w-[1100px] mx-auto space-y-20 transition-[max-width] duration-300 ease-out">
 	<!-- 1. 个人简介与个人信息 Hero 区 (满足需求：个人简介、email、github 主页等) -->
 	<section class="space-y-6">
 		<div class="flex items-start justify-between gap-6">

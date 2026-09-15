@@ -40,7 +40,7 @@
 
 <HeaderNav showBack={true} backUrl="/" />
 
-<main class="min-h-screen pt-28 pb-24 px-5 sm:px-8 max-w-3xl mx-auto">
+<main class="min-h-screen pt-28 pb-24 px-5 sm:px-8 max-w-3xl reading-wide:max-w-[1100px] mx-auto transition-[max-width] duration-300 ease-out">
 	<!-- 页面大标题 -->
 	<header class="mb-10 sm:mb-12">
 		<h1 class="text-3xl sm:text-4xl lg:text-[40px] font-serif-title text-foreground tracking-tight mb-3">

@@ -21,6 +21,13 @@
 					document.documentElement.classList.remove('dark');
 				}
 			} catch (e) {}
+
+			// 宽屏偏好:首屏即应用,避免窄→宽跳动
+			try {
+				if (localStorage.getItem('site_reading_width') === 'wide') {
+					document.documentElement.classList.add('reading-wide');
+				}
+			} catch (e) {}
 		</script>
 		%sveltekit.head%
 	</head>
