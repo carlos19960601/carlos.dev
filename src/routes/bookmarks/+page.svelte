@@ -18,7 +18,8 @@
 		SquareTerminal,
 		Compass,
 		KeyRound,
-		PenTool
+		PenTool,
+		Library
 	} from "@lucide/svelte";
 	import { bookmarkGroups, getAllTags } from "$lib/data/bookmarks";
 	import { playClickSound, playSuccessSound } from "$lib/sound";
@@ -31,7 +32,7 @@
 	const allTags = ["All", ...getAllTags()];
 
 	// 分组图标名 → 图标组件映射(书签数据只存图标名字符串,在此集中转换)
-	const GROUP_ICONS = { Code2, Palette, Bot, BookOpen, Lightbulb, Sparkles, SquareTerminal, Compass, KeyRound, PenTool } as const;
+	const GROUP_ICONS = { Code2, Palette, Bot, BookOpen, Lightbulb, Sparkles, SquareTerminal, Compass, KeyRound, PenTool, Library } as const;
 
 	/** 根据分组配置的图标名取对应组件,未知名称回退到默认书签图标 */
 	function getGroupIcon(name: string) {
@@ -91,7 +92,7 @@
 
 <HeaderNav showBack={true} backUrl="/" />
 
-<main class="min-h-screen pt-28 pb-24 px-5 sm:px-8 max-w-4xl mx-auto">
+<main class="min-h-screen pt-28 pb-24 px-5 sm:px-8 max-w-4xl reading-wide:max-w-[1100px] mx-auto transition-[max-width] duration-300 ease-out">
 	<!-- 页面大标题 -->
 	<header class="mb-10 sm:mb-12">
 		<div class="flex items-center gap-2 text-xs font-mono text-muted-foreground uppercase tracking-wider mb-2">

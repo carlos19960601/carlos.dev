@@ -438,6 +438,38 @@ export const bookmarkGroups: BookmarkGroup[] = [
 			}
 		]
 	},
+	{
+		id: "reading-books",
+		name: "阅读与书籍",
+		description: "专家荐书与优质阅读资源，跨领域通识书单一网打尽",
+		icon: "Library",
+		bookmarks: [
+			{
+				id: "five-books",
+				title: "Five Books",
+				url: "https://fivebooks.com/",
+				description: "各领域专家每期精选五本最佳书籍，涵盖科学、历史、哲学与文学的权威荐书平台。",
+				group: "阅读与书籍",
+				tags: ["Books", "Reading", "Recommendations"]
+			}
+		]
+	},
+	{
+		id: "tech-think-tank",
+		name: "技术思考与智库",
+		description: "深度学习架构拆解、论文精读与一线实现笔记",
+		icon: "BookOpen",
+		bookmarks: [
+			{
+				id: "transformers-breakdown",
+				title: "Transformers Breakdown",
+				url: "https://www.k-a.in/transformers.html",
+				description: "用 PyTorch 逐行拆解 Transformer 实现，从输入嵌入、位置编码到多头注意力与完整训练流程。",
+				group: "技术思考与智库",
+				tags: ["Transformer", "PyTorch", "LLM", "Tutorial"]
+			}
+		]
+	},
 ];
 
 // 获取全部标签列表（去重）

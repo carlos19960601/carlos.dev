@@ -38,6 +38,7 @@ async function getHighlighter(): Promise<Highlighter> {
 				"html",
 				"css",
 				"markdown",
+				"typst",
 			],
 		});
 	}
@@ -323,6 +324,44 @@ function createRenderer(toc: TocItem[], highlighter: Highlighter): Renderer {
 				: renderer.parser.parseInline(item.tokens);
 		}
 		return item.text ?? "";
+	};
+
+	// ---- 表格:语法速查等对照内容 ----
+	renderer.table = (token) => {
+		const alignClass = (align: Tokens.TableCell["align"]) => {
+			if (align === "center") return "text-center";
+			if (align === "right") return "text-right";
+			return "text-left";
+		};
+
+		const renderCell = (cell: Tokens.TableCell, tag: "th" | "td") => {
+			const inner = renderInline(renderer, cell.tokens, cell.text);
+			const weight = tag === "th" ? "font-medium text-foreground" : "";
+			return `<${tag} class="px-3.5 py-2.5 ${alignClass(cell.align)} ${weight}">${inner}</${tag}>`;
+		};
+
+		const header = token.header
+			.map((cell) => renderCell(cell, "th"))
+			.join("");
+		const body = token.rows
+			.map(
+				(row) =>
+					`<tr class="border-t border-border/60">${row
+						.map((cell) => renderCell(cell, "td"))
+						.join("")}</tr>`,
+			)
+			.join("");
+
+		return `
+			<div class="my-6 overflow-x-auto rounded-xl border border-border/80 bg-card shadow-2xs">
+				<table class="w-full min-w-[28rem] text-[14px] sm:text-[15px] leading-relaxed text-foreground/90">
+					<thead class="bg-muted/50">
+						<tr>${header}</tr>
+					</thead>
+					<tbody>${body}</tbody>
+				</table>
+			</div>
+		`;
 	};
 
 	return renderer;
